@@ -18,37 +18,9 @@ os.chdir(path)
 
 from matching_tool import ms2_parser, spectra_plot
 from LibDataParser import *
-
-"""
-Read and merge files
-"""
+from mergeMS2 import *
 
 
-def merge_ms2(filedir):
-    """
-    Merges ms2 files in a filedir location.
-    """
-    ms2_files = []
-    for i in os.listdir(filedir):
-        if i[-4:] == ".ms2":
-            ms2_files.append(i)
-
-    df_data = []
-    df_scanID = []
-    df_singleComp_weight = []
-    df_charge = []
-    df_comp_weight = []
-
-
-    for i in ms2_files:
-        temp_df_data, temp_df_scanID, temp_df_singleComp_weight, temp_df_charge, temp_df_comp_weight = ms2_parser(filedir+"/"+i)
-        df_data += temp_df_data
-        df_scanID += temp_df_scanID
-        df_singleComp_weight += temp_df_singleComp_weight
-        df_charge += temp_df_charge
-        df_comp_weight += temp_df_comp_weight
-
-    return df_data, df_scanID, df_singleComp_weight, df_charge, df_comp_weight
 
 
 #df_data, df_scanID, df_singleComp_weight, df_charge, df_comp_weight = merge_ms2(filedir)
@@ -57,10 +29,10 @@ def merge_ms2(filedir):
 
 def main():
     # MaRaCluster
-    
     start = time.time()
     filedir = path+"/LibraryData/consensus"
-    df_data_MC, df_scanID_MC, df_singleCompWeight_MC, df_charge_MC, df_compWeight_MC = merge_ms2(filedir)
+    #df_data_MC, df_scanID_MC, df_singleCompWeight_MC, df_charge_MC, df_compWeight_MC = merge_ms2(filedir)
+    df_data_MC, df_acc_MC = mergeMS2(filedir)
     end = time.time()
     time_elapsed = end-start
     print(time_elapsed)
@@ -68,74 +40,40 @@ def main():
     start = time.time()
     # Sample Data
     file_directory = path+"/SampleData/"
-    df_data_S, df_scanID_S, df_singleCompWeight_S, df_charge_S, df_compWeight_S = merge_ms2(filedir)
+    #df_data_S, df_scanID_S, df_singleCompWeight_S, df_charge_S, df_compWeight_S = merge_ms2(filedir)
+    df_data_S, df_acc_S = mergeMS2(filedir)
     end = time.time()
     time_elapsed = end-start
     print(time_elapsed)
 
-"""
-ToDo
-- create list to csv exporter
-- create csv to list importer
-- export df_data, list of df to csv
-- import df_data, .csv of dataframe to dataframes and create list object
-- 
-
-"""
-
-a = []
-
-
-"""
-Read in MaRaClusters
-"""
-
-filedir = path+"/LibraryData/consensus"
-
-
-MaRa_ms2_files = []
-for i in os.listdir(filedir):
-    if i[-4:] == ".ms2":
-        MaRa_ms2_files.append(i)    
-
-df_data = []
-df_scanID = []
-df_singleComp_weight = []
-df_charge = []
-df_comp_weight = []
-
-start = time.time()    
-for i in MaRa_ms2_files:
-    temp_df_data, temp_df_scanID, temp_df_singleComp_weight, temp_df_charge, temp_df_comp_weight = ms2_parser(filedir+"/"+i)
-    df_data += temp_df_data
-    df_scanID += temp_df_scanID
-    df_singleComp_weight += temp_df_singleComp_weight
-    df_charge += temp_df_charge
-    df_comp_weight += temp_df_comp_weight
-
-end = time.time()
-time_elapsed = end-start
-print(time_elapsed)
-    
-
-
 
 #df_data, df_scanID, df_singleComp_weight, df_charge, df_comp_weight = ms2_parser(filedir+"/"+MaRa_ms2_files[0])
-spectra_plot(0, df_data, df_scanID) 
+spectra_plot(0, df_data_MC, df_scanID_MC) 
  
 
 plt.stem(df_data[0]["mz"], df_data[0]["intensity"], markerfmt = ",")        
 plt.title("scanID: "+str(df_scanID[0]))    
+
+test_df = pd.DataFrame([df_scanID_MC, df_singleCompWeight_MC, df_charge_MC, df_compWeight_MC], 
+                       index=["scanID", "singleCompWeight", "charge", "compWeight"])
+
+
+
+
+"""
+ToDo
+- create list to csv exporter - DONE
+- create csv to list importer - DONE
+- export df_data, list of df to csv - DONE
+- import df_data, .csv of dataframe to dataframes and create list object - DONE
+- 
+
+"""
+
+
+
+
+
                 
 
-"""
-Read in Sample
-"""
-
-file_directory = path+"/SampleData/"
-
-for i in os.listdir(file_directory):
-    if i[-4:] == ".ms2":
-        #MaRa_ms2_files.append(i)    
-        print(i)
 
