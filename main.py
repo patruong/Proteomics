@@ -12,7 +12,7 @@ import time
 
 import os
 cwd = os.getcwd()
-path = cwd
+path = cwd + "/Proteomics"
 os.listdir(path)
 os.chdir(path)
 
@@ -51,9 +51,9 @@ def merge_ms2(filedir):
     return df_data, df_scanID, df_singleComp_weight, df_charge, df_comp_weight
 
 
-df_data, df_scanID, df_singleComp_weight, df_charge, df_comp_weight = merge_ms2(filedir)
+#df_data, df_scanID, df_singleComp_weight, df_charge, df_comp_weight = merge_ms2(filedir)
 
-spectra_plot(0, df_data, df_scanID) 
+#spectra_plot(0, df_data, df_scanID) 
 
 def main():
     # MaRaCluster
@@ -72,8 +72,19 @@ def main():
     end = time.time()
     time_elapsed = end-start
     print(time_elapsed)
-    
-    
+
+"""
+ToDo
+- create list to csv exporter
+- create csv to list importer
+- export df_data, list of df to csv
+- import df_data, .csv of dataframe to dataframes and create list object
+- 
+
+"""
+
+a = []
+
 
 """
 Read in MaRaClusters
