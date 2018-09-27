@@ -135,8 +135,16 @@ def TEST_csv_to_dflist():
     for i in range(len(b)):
         print(b[i])
 
+def main():
+    print("Running test list_to_csv() function...")
+    TEST_list_to_csv()
 
+    print("Running test dflist_to_csv() function...")
+    TEST_dflist_to_csv()
 
+    print("Runninge test csv_to_dflist() function...")
+    TEST_list_to_csv()
 
-
+if __name__ == "__main__":
+    main()
 
