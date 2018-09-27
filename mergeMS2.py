@@ -11,6 +11,7 @@ Read and merge files
 """
 import os
 import pandas as pd
+from matching_tool import ms2_parser, spectra_plot
 
 def mergeMS2(filedir):
     """
