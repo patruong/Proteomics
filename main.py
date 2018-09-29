@@ -19,8 +19,12 @@ os.chdir(path)
 from matching_tool import ms2_parser, spectra_plot
 from LibDataParser import *
 from mergeMS2 import *
+from helper_functions import *
 
-
+"""
+NOTE to self:
+    helper_functions for ms2 is aweful! Do not use!
+"""
 
 
 #df_data, df_scanID, df_singleComp_weight, df_charge, df_comp_weight = merge_ms2(filedir)
@@ -46,7 +50,16 @@ def main():
     time_elapsed = end-start
     print(time_elapsed)
 
-
+    
+    # Export the data for quicker loading time
+    dflist_to_csv(df_data_MC, folder = "/MaraClusterCSV")
+    dflist_to_csv(df_data_S, folder = "/SampleCSV")
+    
+    
+    
+    
+    
+    
 #df_data, df_scanID, df_singleComp_weight, df_charge, df_comp_weight = ms2_parser(filedir+"/"+MaRa_ms2_files[0])
 spectra_plot(0, df_data_MC, df_scanID_MC) 
  
